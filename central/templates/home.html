@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin-top:20%">
+    <div style="margin-left: 40%" class="row">
+    <form style="margin-right: 4%" method="get" action="/manage">
+        <button style="width: 200%" class="btn btn-danger" type="submit"> Manager </button>
+    </form>
+
+    <form style="margin-left: 4%" method="get" action="/book">
+        <button style="width: 200%" class="btn btn-danger" type="submit"> Passenger </button>
+    </form>
+    </div>
+</div>
+{% endblock %}

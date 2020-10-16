@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load filters_extra %}
+
+<form method="get" action="/">
+    <p align="center">
+        <button class="btn btn-primary" type="submit" style="margin-top:1%"> Home </button>
+    </p>
+</form>
+
+<div class="container" align="center">
+<form style="margin-top:20%">
+    <input type='text' name='source' placeholder="Source" />
+    <input type='text' name='destination' placeholder="destination">
+    <input type="submit" value="search">
+</form>
+
+{% if station %}
+    {% if station.count < station.capacity|divide:2 %}
+      <p style="margin-top: 5%"> Currently Low Risk At {{ station.name }} </p>
+    {% else %}
+      <p> Currently High Risk At {{ station.name }} </p>
+    {% endif %} 
+{% endif %}
+
+{% if train_list %}
+<table style="margin-top:4%" class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Train Number</th>
+      <th scope="col">Passengers</th>
+      <th scope="col">Low Risk Passengers</th>
+      <th scope="col">Senior Passengers</th>
+      <th scope="col">Last Sanitized</th>
+      <th scope="col">Source</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Book Ticket</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for train in train_list %}
+    <tr>
+      <th scope="row">{{ train.train_no }}</th>
+      <td>{{ train.passengers }}</td>
+      <td>{{ train.safe_passengers }} </td>
+      <td>{{ train.senior_passengers }} </td>
+      <td>{{ train.lastsanitized }}</td>
+      <td>{{ train.source }} </td>
+      <td>{{ train.destination }} </td>
+      {% if train.passengers < train.capacity|divide:2 %}
+        <td><a style="color: green" href="{{ train.train_no }}/"> Book </a></td>
+      {% else %}
+        <td> Full </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+</div>
+
+{% endblock %}
